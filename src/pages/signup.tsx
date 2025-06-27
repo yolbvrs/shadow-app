@@ -4,6 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
+import { supabase } from '@/lib/supabaseClient';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -13,12 +14,29 @@ const Signup: React.FC = () => {
     password: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Add validation + Supabase auth integration
-    console.log('Sign up data:', formData);
-    navigate('/'); // Redirect on success
-  };
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  const { email, password, fullName } = formData;
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: fullName
+      }
+    }
+  });
+
+  if (error) {
+    console.error('Signup failed:', error.message);
+    alert('Signup failed: ' + error.message);
+  } else {
+    console.log('User signed up:', data);
+    navigate('/thank-you');
+  }
+};
 
   return (
     <div className="min-h-screen bg-black text-white px-6 py-12 flex justify-center items-center">
