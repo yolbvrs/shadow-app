@@ -1,58 +1,70 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react'; // optional
+import React, { useState } from 'react';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useNavigate } from 'react-router-dom';
 
-const Signup = () => {
+const Signup: React.FC = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // TODO: Add validation + Supabase auth integration
+    console.log('Sign up data:', formData);
+    navigate('/'); // Redirect on success
+  };
+
   return (
-    <div className="relative min-h-screen bg-black text-white flex flex-col items-center justify-center px-6 py-10 text-center">
-      
-      {/* ← Home Button */}
-      <Link 
-        to="/" 
-        className="absolute top-4 left-4 flex items-center text-gray-400 hover:text-white transition"
-      >
-        <ArrowLeft className="w-5 h-5 mr-2" />
-        <span className="text-sm font-medium">Home</span>
-      </Link>
-
-	<img 
-  	src="public/shadow-icon.jpg" 
-  	alt="SHADOW icon" 
-  	className="w-24 h-24 mb-6 mx-auto object-cover rounded-full"
-	/>
-
-      {/* Content */}
-      <h1 className="text-4xl font-bold mb-4 tracking-widest">SHADOW</h1>
-      <p className="text-lg text-gray-300 max-w-xl mb-8">
-        SHADOW is a secure, modern platform that connects verified security professionals to people and businesses in need of protection.
-      </p>
-
-      <div className="text-left max-w-lg space-y-6">
-        <div>
-          <h2 className="text-2xl font-semibold mb-2">🛡️ Why Join SHADOW?</h2>
-          <ul className="list-disc list-inside text-gray-400">
-            <li>Access exclusive job opportunities in high-trust environments</li>
-            <li>Get verified and showcase your professionalism</li>
-            <li>Build your presence in the digital security space</li>
-          </ul>
-        </div>
-
-        <div>
-          <h2 className="text-2xl font-semibold mb-2">⚙️ How It Works</h2>
-          <ol className="list-decimal list-inside text-gray-400">
-            <li>Create your provider profile</li>
-            <li>Upload your license and credentials</li>
-            <li>Get approved and start receiving requests</li>
-          </ol>
-        </div>
-
-        <div>
-          <h2 className="text-2xl font-semibold mb-2">🌐 The Vision</h2>
-          <p className="text-gray-400">
-            SHADOW empowers those who protect. In a rapidly evolving digital age, we give security professionals the tools to thrive and connect—no middlemen, no noise. Just trust, readiness, and access.
-          </p>
-        </div>
-      </div>
+    <div className="min-h-screen bg-black text-white px-6 py-12 flex justify-center items-center">
+      <Card className="w-full max-w-md bg-gray-900 border-gray-700">
+        <CardHeader>
+          <CardTitle className="text-white text-center text-2xl">
+            Create Your SHADOW Account
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <Label htmlFor="fullName">Full Name</Label>
+              <Input
+                id="fullName"
+                value={formData.fullName}
+                onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                required
+              />
+            </div>
+            <div>
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                required
+              />
+            </div>
+            <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700">
+              Sign Up
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 };
