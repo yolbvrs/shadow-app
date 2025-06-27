@@ -11,6 +11,7 @@ import ThankYou from "./pages/ThankYou";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import AdminDashboard from "./pages/AdminDashboard";
+import Signup from "./pages/Signup";
 
 const queryClient = new QueryClient();
 
