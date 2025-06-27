@@ -13,17 +13,27 @@ const Index: React.FC = () => {
       </p>
 
       {/* Get Started Button */}
-      <Link to="/join-team" className="w-full max-w-xs">
+      <Link to="/join-team" className="w-full max-w-xs mb-4">
         <Button 
-          className="bg-white text-black hover:bg-gray-200 text-lg px-10 py-4 rounded-lg font-medium transition-colors w-full touch-manipulation"
+          className="bg-white text-black hover:bg-gray-200 text-lg px-10 py-4 rounded-lg font-medium transition-colors w-full"
           size="lg"
         >
           Get Started
         </Button>
       </Link>
 
-      {/* Log In Button */}
-      <Link to="/login" className="mt-4 text-sm text-gray-400 hover:text-white transition">
+      {/* Sign Up Button */}
+      <Link to="/signup" className="w-full max-w-xs mb-2">
+        <Button 
+          variant="outline" 
+          className="border-white text-white hover:bg-white hover:text-black text-lg px-10 py-4 rounded-lg font-medium w-full"
+        >
+          Sign Up
+        </Button>
+      </Link>
+
+      {/* Log In Link */}
+      <Link to="/login" className="mt-2 text-sm text-gray-400 hover:text-white transition">
         Already a provider? Log In
       </Link>
     </div>
