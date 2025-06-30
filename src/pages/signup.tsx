@@ -12,31 +12,33 @@ const Signup: React.FC = () => {
     fullName: '',
     email: '',
     password: '',
+    phone: '', // added phone here
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const { email, password, fullName } = formData;
+    const { email, password, fullName, phone } = formData;
 
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
-        full_name: fullName
-      }
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: fullName,
+          phone_number: phone, // include phone here
+        },
+      },
+    });
+
+    if (error) {
+      console.error('Signup failed:', error.message);
+      alert('Signup failed: ' + error.message);
+    } else {
+      console.log('User signed up:', data);
+      navigate('/thank-you');
     }
-  });
-
-  if (error) {
-    console.error('Signup failed:', error.message);
-    alert('Signup failed: ' + error.message);
-  } else {
-    console.log('User signed up:', data);
-    navigate('/thank-you');
-  }
-};
+  };
 
   return (
     <div className="min-h-screen bg-black text-white px-6 py-12 flex justify-center items-center">
@@ -68,6 +70,16 @@ const Signup: React.FC = () => {
               />
             </div>
             <div>
+              <Label htmlFor="phone">Phone Number</Label>
+              <Input
+                id="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                placeholder="+1 555-555-5555"
+              />
+            </div>
+            <div>
               <Label htmlFor="password">Password</Label>
               <Input
                 id="password"
@@ -85,6 +97,7 @@ const Signup: React.FC = () => {
       </Card>
     </div>
   );
+};
 };
 
 export default Signup;
